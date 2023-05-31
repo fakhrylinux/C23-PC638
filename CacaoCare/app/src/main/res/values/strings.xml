@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Cacao Care</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="disease_detection">Disease Detection</string>
+    <string name="analyze">Analyze</string>
+    <string name="description">- Brown or grey stains on bottom of green fruits. \n
+- Internal black rot in fruits.\n
+
+Blossom End Rot is characterized by the appearance of an irregular patch at the tip of the fruit. The patch varies in size and color. In the early stages it is light green. It becomes brows and black as the fruit matures. Fruit tissues lose consistency, become sunken and the tip eventually takes a flattened appearance. Internal black rot can also develop in fruits with little or no external symptoms.</string>
+    <string name="news">News</string>
+    <string name="lorem_ipsum">Lorem Ipsum</string>
+    <string name="lorem_ipsum_long">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+</resources>
