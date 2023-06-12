@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        tools:context=".ui.screen.detectiondetail.DetectionDetailFragment">
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/TextAppearance.Material3.HeadlineMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Blossom End Rot" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/image_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            tools:itemCount="5"
+            tools:listitem="@layout/row_item" />
+
+        <TextView
+            android:id="@+id/symptom_tv"
+            style="@style/TextAppearance.Material3.HeadlineSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/gejala"
+            app:layout_constraintTop_toBottomOf="@id/image_rv" />
+
+        <TextView
+            android:id="@+id/symptom_detail_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/description"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@id/symptom_tv" />
+
+        <TextView
+            android:id="@+id/treatment_tv"
+            style="@style/TextAppearance.Material3.HeadlineSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/perawatan"
+            app:layout_constraintTop_toBottomOf="@id/symptom_detail_tv" />
+
+        <TextView
+            android:id="@+id/treatment_detail_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/description"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@id/treatment_tv" />
+
+        <TextView
+            android:id="@+id/prevention_tv"
+            style="@style/TextAppearance.Material3.HeadlineSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/pencegahan"
+            app:layout_constraintTop_toBottomOf="@id/treatment_detail_tv" />
+
+        <TextView
+            android:id="@+id/prevention_detail_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/description"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@id/prevention_tv" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

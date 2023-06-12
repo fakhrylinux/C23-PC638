@@ -17,11 +17,32 @@
     <fragment
         android:id="@+id/navigation_profile"
         android:name="me.fakhry.cacaocare.ui.screen.profile.ProfileFragment"
-        android:label="fragment_profile"
+        android:label="Profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/diseaseDetectionFragment"
         android:name="me.fakhry.cacaocare.ui.screen.diseasedetection.DiseaseDetectionFragment"
-        android:label="fragment_disease_detection"
-        tools:layout="@layout/fragment_disease_detection" />
+        android:label="Disease Detection"
+        tools:layout="@layout/fragment_disease_detection" >
+        <action
+            android:id="@+id/action_diseaseDetectionFragment_to_cameraFragment"
+            app:destination="@id/cameraFragment" />
+        <action
+            android:id="@+id/action_diseaseDetectionFragment_to_detectionDetailFragment"
+            app:destination="@id/detectionDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cameraFragment"
+        android:name="me.fakhry.cacaocare.ui.screen.diseasedetection.CameraFragment"
+        android:label="fragment_camera"
+        tools:layout="@layout/fragment_camera" />
+    <fragment
+        android:id="@+id/detectionDetailFragment"
+        android:name="me.fakhry.cacaocare.ui.screen.detectiondetail.DetectionDetailFragment"
+        android:label="Detection Detail"
+        tools:layout="@layout/fragment_detection_detail" >
+        <argument
+            android:name="prediction"
+            app:argType="string" />
+    </fragment>
 </navigation>

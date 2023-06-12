@@ -35,8 +35,9 @@
             android:orientation="vertical">
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:id="@+id/predict_iv"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 app:srcCompat="@drawable/outline_energy_savings_leaf_24" />
 
             <TextView

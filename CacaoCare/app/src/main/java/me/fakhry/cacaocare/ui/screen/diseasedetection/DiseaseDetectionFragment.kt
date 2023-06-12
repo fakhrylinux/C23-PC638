@@ -1,60 +1,133 @@
 package me.fakhry.cacaocare.ui.screen.diseasedetection
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import coil.load
 import me.fakhry.cacaocare.R
+import me.fakhry.cacaocare.databinding.FragmentDiseaseDetectionBinding
+import me.fakhry.cacaocare.repository.Result
+import me.fakhry.cacaocare.ui.ViewModelFactory
+import me.fakhry.cacaocare.util.convertBitmapToFile
+import me.fakhry.cacaocare.util.reduceFileImage
+import me.fakhry.cacaocare.util.rotateBitmap
+import me.fakhry.cacaocare.util.uriToFile
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [DiseaseDetectionFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class DiseaseDetectionFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class DiseaseDetectionFragment : Fragment(), View.OnClickListener {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding: FragmentDiseaseDetectionBinding? = null
+    private val binding get() = _binding
+    private var result: File? = null
+    private var getFile: File? = null
+    private var isBackCamera: Boolean = true
+    private var resultImage: Bitmap? = null
+    private val factory: ViewModelFactory = ViewModelFactory.getInstance()
+    private val viewModel: DiseaseDetectionViewModel by viewModels { factory }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_disease_detection, container, false)
+        _binding = FragmentDiseaseDetectionBinding.inflate(inflater, container, false)
+        return binding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setFragmentResultListener(CAMERA_X_IS_BACK_CAMERA) { _, bundle ->
+            isBackCamera = bundle.getBoolean("isBackCamera")
+        }
+        setFragmentResultListener("200") { _, bundle ->
+            @Suppress("DEPRECATION")
+            result = bundle.getSerializable("result") as File
+            resultImage = rotateBitmap(BitmapFactory.decodeFile(result?.path ?: ""), isBackCamera)
+            getFile = reduceFileImage(context?.let { convertBitmapToFile(resultImage, it) } as File)
+            binding?.plantIv?.load(resultImage)
+        }
+
+        binding?.btnTakePhoto?.setOnClickListener(this)
+        binding?.btnChoosePhoto?.setOnClickListener(this)
+        binding?.analyzeBtn?.setOnClickListener(this)
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DiseaseDetectionFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DiseaseDetectionFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        const val CAMERA_X_RESULT = "200"
+        const val CAMERA_X_IS_BACK_CAMERA = "100"
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.btn_take_photo -> startCameraX()
+            R.id.btn_choose_photo -> startGallery()
+            R.id.analyze_btn -> analyze()
+        }
+    }
+
+    private fun startCameraX() {
+        findNavController().navigate(R.id.cameraFragment)
+    }
+
+    private fun startGallery() {
+        val intent = Intent()
+        intent.action = Intent.ACTION_GET_CONTENT
+        intent.type = "image/*"
+        val chooser = Intent.createChooser(intent, "Choose a Picture")
+        launcherForResultFromGallery.launch(chooser)
+    }
+
+    private val launcherForResultFromGallery = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val selectedImg: Uri = result.data?.data as Uri
+            val myFile = context?.let { uriToFile(selectedImg, it) }
+            getFile = myFile
+            binding?.plantIv?.load(myFile)
+        }
+    }
+
+    private fun analyze() {
+        if (getFile == null) {
+            Toast.makeText(context, getString(R.string.take_photo_first), Toast.LENGTH_SHORT).show()
+        } else {
+            val file = getFile
+            if (file != null) {
+                val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
+                val imageMultipart: MultipartBody.Part =
+                    MultipartBody.Part.createFormData("image", file.name, requestImageFile)
+                viewModel.getPrediction(imageMultipart).observe(viewLifecycleOwner) { result ->
+                    when (result) {
+                        is Result.Loading -> {}
+                        is Result.Success -> {
+                            val direction = DiseaseDetectionFragmentDirections
+                                .actionDiseaseDetectionFragmentToDetectionDetailFragment(result.data)
+                            findNavController().navigate(direction)
+                        }
+                        is Result.Error -> {
+                            Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 }
+
             }
+        }
     }
 }
