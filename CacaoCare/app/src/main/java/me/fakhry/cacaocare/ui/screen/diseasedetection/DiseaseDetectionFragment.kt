@@ -105,6 +105,8 @@ class DiseaseDetectionFragment : Fragment(), View.OnClickListener {
     }
 
     private fun analyze() {
+        binding?.progressBar?.visibility = View.VISIBLE
+        binding?.analyzeBtn?.isEnabled = false
         if (getFile == null) {
             Toast.makeText(context, getString(R.string.take_photo_first), Toast.LENGTH_SHORT).show()
         } else {

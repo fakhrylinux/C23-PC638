@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import coil.load
 import me.fakhry.cacaocare.databinding.FragmentDetectionDetailBinding
+import me.fakhry.cacaocare.network.model.DataSource
 
 class DetectionDetailFragment : Fragment() {
 
@@ -27,6 +29,29 @@ class DetectionDetailFragment : Fragment() {
 
         val title = args.prediction
         binding?.title?.text = title
+        when (title) {
+            "Black Pod Rot" -> {
+                binding?.headerIv?.load(DataSource.detections[0].image)
+                binding?.title?.text = DataSource.detections[0].title
+                binding?.symptomDetailTv?.text = DataSource.detections[0].symptom
+                binding?.treatmentDetailTv?.text = DataSource.detections[0].treatment
+                binding?.preventionDetailTv?.text = DataSource.detections[0].prevention
+            }
+            "Monilia" -> {
+                binding?.headerIv?.load(DataSource.detections[1].image)
+                binding?.title?.text = DataSource.detections[1].title
+                binding?.symptomDetailTv?.text = DataSource.detections[1].symptom
+                binding?.treatmentDetailTv?.text = DataSource.detections[1].treatment
+                binding?.preventionDetailTv?.text = DataSource.detections[1].prevention
+            }
+            "Healthy" -> {
+                binding?.headerIv?.load(DataSource.detections[2].image)
+                binding?.title?.text = DataSource.detections[2].title
+                binding?.symptomDetailTv?.text = DataSource.detections[2].symptom
+                binding?.treatmentDetailTv?.text = DataSource.detections[2].treatment
+                binding?.preventionDetailTv?.text = DataSource.detections[2].prevention
+            }
+        }
     }
 
     companion object {

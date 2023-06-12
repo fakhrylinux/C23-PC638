@@ -4,7 +4,7 @@ object DataSource {
     val detections = listOf(
         Detection(
             id = 1,
-            image = "",
+            image = "https://storage.googleapis.com/cacaobucket/black_pod_rot/black_pod_rot_247.jpg",
             title = "Black Pod Rot (Fito)",
             symptom = "- Penyakit busuk buah kakao/Black pod rot ( Phytophthora palmivora) diawali dengan munculnya bercak kecil pada buah, sekitar dua hari setelah infeksi. \n" +
                     "- Bercak berwarna coklat, kemudian berubah menjadi kehitaman dan meluas dengan cepat sampai seluruh buah tertutup.\n",
@@ -16,8 +16,8 @@ object DataSource {
                     "- Pengendaliannya dengan sanitasi yakni bibit terserang diambil dan bibit yang sehat dilindungi dengan aplikasi fungisida Cu\n"
         ),
         Detection(
-            id = 1,
-            image = "",
+            id = 2,
+            image = "https://storage.googleapis.com/cacaobucket/monilia/Monilia101.jpg",
             title = "Frosty Pod (Monilia)",
             symptom = "Pod atau polong (struktur pelindung yang berisi biji kakao) kurus\n" +
                     "* Pematangan polong yang terlalu dini (normalnya sekitar lima sampai enam bulan)\n" +
@@ -36,8 +36,8 @@ object DataSource {
                     "•        Pemeliharaan sistem drainase\n"
         ),
         Detection(
-            id = 1,
-            image = "",
+            id = 3,
+            image = "https://storage.googleapis.com/cacaobucket/healthy/healthy_22.jpg",
             title = "Healthy",
             symptom = "Buah kakao dalam keadaan sehat. Pertahankan metode yang telah dilakukan supaya buah kakao selalu sehat.\n",
             treatment = "",

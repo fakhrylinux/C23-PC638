@@ -19,16 +19,16 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Blossom End Rot" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/image_rv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/header_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="240dp"
             android:layout_marginTop="24dp"
             android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/title"
-            tools:itemCount="5"
-            tools:listitem="@layout/row_item" />
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title" />
 
         <TextView
             android:id="@+id/symptom_tv"
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/gejala"
-            app:layout_constraintTop_toBottomOf="@id/image_rv" />
+            app:layout_constraintTop_toBottomOf="@id/header_iv" />
 
         <TextView
             android:id="@+id/symptom_detail_tv"
