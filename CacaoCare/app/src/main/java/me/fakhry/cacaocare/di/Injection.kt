@@ -1,6 +1,5 @@
 package me.fakhry.cacaocare.di
 
-import android.content.Context
 import me.fakhry.cacaocare.network.retrofit.ApiConfig
 import me.fakhry.cacaocare.repository.PredictionRepository
 

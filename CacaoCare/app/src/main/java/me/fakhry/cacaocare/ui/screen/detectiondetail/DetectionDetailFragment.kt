@@ -53,7 +53,4 @@ class DetectionDetailFragment : Fragment() {
             }
         }
     }
-
-    companion object {
-    }
 }
